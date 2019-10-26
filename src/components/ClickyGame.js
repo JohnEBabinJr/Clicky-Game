@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import Navbar from './Navbar';
-import Container from './Container';
-import Footer from './Footer';
-import Banner from './Banner';
-import images from '../images';
+import React, { Component } from "react";
+import Navbar from "./Navbar";
+import Container from "./Container";
+import Footer from "./Footer";
+import Banner from "./Banner";
+import images from "../images";
 
 class ClickyGame extends Component {
   state = {
     score: 0,
     highScore: 0,
-    navMsgColor: '',
-    navMessage: 'Click an image to begin!',
+    navMsgColor: "",
+    navMessage: "Click an image to begin!",
     allCharacters: this.shuffleArray(),
     wasClicked: [],
     shake: false
@@ -21,7 +21,9 @@ class ClickyGame extends Component {
     const newArr = images.slice();
     const shuffleArr = [];
     while (newArr.length > 0) {
-      shuffleArr.push(newArr.splice(Math.floor(Math.random() * newArr.length), 1)[0]);
+      shuffleArr.push(
+        newArr.splice(Math.floor(Math.random() * newArr.length), 1)[0]
+      );
     }
 
     return shuffleArr;
@@ -34,39 +36,48 @@ class ClickyGame extends Component {
 
     let score = this.state.score;
     let highScore = this.state.highScore;
-    if (!this.state.wasClicked.includes(clickedElem)) {
-      if (score === highScore) {
-        score++;
-        highScore++;
-      } else {
-        score++;
-      }
-      prevState.push(clickedElem);
-    }
-
-    if (this.state.wasClicked.includes(clickedElem)) {
-      let score = 0;
+    if (score === 12) {
       return this.setState({
         score: score,
         highScore: highScore,
-        navMsgColor: 'incorrect',
-        navMessage: 'Incorrect guess!',
-        allCharacters: shuffled,
-        wasClicked: [],
-        shake: true
+        navMsgColor: "correct",
+        navMessage: "You got them all!"
       });
+    } else {
+      if (!this.state.wasClicked.includes(clickedElem)) {
+        if (score === highScore) {
+          score++;
+          highScore++;
+        } else {
+          score++;
+        }
+        prevState.push(clickedElem);
+      }
+
+      if (this.state.wasClicked.includes(clickedElem)) {
+        let score = 0;
+        return this.setState({
+          score: score,
+          highScore: highScore,
+          navMsgColor: "incorrect",
+          navMessage: "Incorrect guess!",
+          allCharacters: shuffled,
+          wasClicked: [],
+          shake: true
+        });
+      }
     }
 
     this.setState({
       score: score,
       highScore: highScore,
-      navMsgColor: 'correct',
-      navMessage: 'You Guessed Correctly!',
+      navMsgColor: "correct",
+      navMessage: "You Guessed Correctly!",
       allCharacters: shuffled,
       wasClicked: prevState,
       shake: false
     });
-    return setTimeout(() => this.setState({ navMsgColor: '' }), 500);
+    return setTimeout(() => this.setState({ navMsgColor: "" }), 500);
   }
 
   render() {

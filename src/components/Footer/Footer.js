@@ -1,6 +1,8 @@
-import React from 'react';
-import './Footer.css';
+import React from "react";
+import "./Footer.css";
 
-const Footer = () => <div className="footer text-center">Trevor Johnson</div>;
+const Footer = () => (
+  <div className="footer text-center">World of Warcraft Races</div>
+);
 
 export default Footer;
